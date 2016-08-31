@@ -25,7 +25,8 @@ Dhis2Api.directive('d2Resourcejsondataset', function(){
 		    }
 	}
 	}); 
-Dhis2Api.controller("d2ResourcejsondatasetController", ['$scope', '$filter', '$interval', "commonvariable", "loadjsonresource", "OrgUnit", "DataSets", function ($scope,$filter, $interval, commonvariable, loadjsonresource, OrgUnit, DataSets) {
+Dhis2Api.controller("d2ResourcejsondatasetController", ['$scope', '$filter', '$interval', "commonvariable", "loadjsonresource", "OrgUnit", "DataSets", "commonService",
+                                                        function ($scope,$filter, $interval, commonvariable, loadjsonresource, OrgUnit, DataSets, commonService) {
    
     
     var stop;
@@ -40,6 +41,7 @@ Dhis2Api.controller("d2ResourcejsondatasetController", ['$scope', '$filter', '$i
         $scope.operation = 'show';
         $scope.prevOu = undefined;
     }
+    
     $scope.editOrgUnit = function (datasets) {
         try {
             commonvariable.OrganisationUnit.dataSets = datasets;
@@ -55,11 +57,13 @@ Dhis2Api.controller("d2ResourcejsondatasetController", ['$scope', '$filter', '$i
     }
 
     $scope.$watch(function () {
-        if (commonvariable.OrganisationUnit && commonvariable.OrganisationUnit.id != $scope.prevOu) {
+        if ((commonvariable.OrganisationUnit && commonvariable.OrganisationUnit.id != $scope.prevOu) ||
+        		commonvariable.refreshDataSets) {
             $scope.initForm();
             $scope.prevOu = commonvariable.OrganisationUnit.id;
             $scope.pdatasets = commonvariable.OrganisationUnit.dataSets;
             $scope.loadDataSet();
+            commonvariable.refreshDataSets = false;
             //$scope.finddatasetSelected();
         }
     });
@@ -108,7 +112,11 @@ Dhis2Api.controller("d2ResourcejsondatasetController", ['$scope', '$filter', '$i
                 if ($scope.services.length == skey + 1 && $scope.levels.length == 0){
                     $scope.messages.push({ type: "danger", text: "code " + commonvariable.healhservicesCodeOUG + " not found in file" });
                 }
+                
              });
+            
+            $scope.levels = commonService.sortByKey($scope.levels, 'name');
+            
          });
     }
 

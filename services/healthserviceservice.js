@@ -24,7 +24,9 @@ Dhis2Api.service('healthserviceService', ['$q', 'commonvariable', 'OrgUnitOrgUni
 	
     this.initValue=function($scope) {
         $scope.healthServiceId = commonvariable.ouGroupsetId.HealthService;
-        $scope.healthServiceTypeId = commonvariable.ouGroupsetId.HealthServiceType;
+        commonService.selectOrgUnitGroup(commonvariable.OrganisationUnit.id, commonvariable.ouGroupsetId.HealthServiceType).then(function(ouGroup){
+        	$scope.servicetype = ouGroup.name;
+        });
    	
     };
     
@@ -38,7 +40,7 @@ Dhis2Api.service('healthserviceService', ['$q', 'commonvariable', 'OrgUnitOrgUni
 	      commonvariable.EditOrganisationUnit.openingDate = editOu.openingDate;    	
     };
     
-    this.editHealthService = function (idOu, editOu) {
+    this.editHealthService = function (idOu, editOu, $scope) {
     	
 	      var defered = $q.defer();
 	      var promise = defered.promise;
@@ -46,9 +48,11 @@ Dhis2Api.service('healthserviceService', ['$q', 'commonvariable', 'OrgUnitOrgUni
     	
 		  if (commonvariable.preOrgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].id != commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].id) {
 
-			  OrgUnitOrgUnitGroups.DELETE({ uidorgunit: commonvariable.OrganisationUnit.id, uidgroup: commonvariable.preOrgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].id });
-			  commonService.deleteOrgUnitGroup(commonvariable.OrganisationUnit.id, commonvariable.ouGroupsetId.HealthServiceType)
+			  OrgUnitOrgUnitGroups.DELETE({ uidorgunit: commonvariable.OrganisationUnit.id, uidgroup: commonvariable.preOrgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].id }).$promise.then(function(data){
+			  commonService.deleteOrgUnitGroup(commonvariable.OrganisationUnit.id, commonvariable.ouGroupsetId.HealthServiceType).then(function (data) {
+				  
 			  OrgUnitOrgUnitGroups.POST({ uidorgunit: commonvariable.OrganisationUnit.id, uidgroup: commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].id });
+			  commonvariable.healhservicesCodeOUG = commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].code;
 			  
 			  var sitePrefix = commonvariable.OrganisationUnit.name.slice(0,3);
 			  var healthServiceName = sitePrefix + commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].name;
@@ -60,11 +64,11 @@ Dhis2Api.service('healthserviceService', ['$q', 'commonvariable', 'OrgUnitOrgUni
 				  healthServiceSuffix = commonService.getServiceSuffix(response.data.healthserviceSuffix).suffix;
 						
 				  healthServiceCode=commonvariable.OrganisationUnit.parent.code + "_" + healthServiceSuffix;
-			  
-				  if (commonvariable.OrganisationUnit.children.length>0)
-					  healthServiceCode = healthServiceCode +"_" + (commonvariable.OrganisationUnit.parent.children.length + 1);
+			  				  
+				  //if (commonvariable.OrganisationUnit.children.length>0)
+					//  healthServiceCode = healthServiceCode +"_" + (commonvariable.OrganisationUnit.parent.children.length + 1);
 
-				  editOu.code = healthServiceCode		
+				  editOu.code = healthServiceCode;	
 				  
 				  var codeServiceType = undefined;
 				  
@@ -86,7 +90,8 @@ Dhis2Api.service('healthserviceService', ['$q', 'commonvariable', 'OrgUnitOrgUni
 								    		  healthServiceEdited = true;
 								    	      //asign OU selected 
 								    		  updateOUVariable(editOu);				    	      
-
+											  $scope.code = editOu.code;
+											  $scope.name = editOu.name;
 								    	  }
 										  defered.resolve(healthServiceEdited);				  
 								   });
@@ -98,9 +103,13 @@ Dhis2Api.service('healthserviceService', ['$q', 'commonvariable', 'OrgUnitOrgUni
 				  		});
 					  
 				  });
+					  
+				  });
 
 				  
-			   });	
+			   });
+			  
+			  });
 			  			  
 		  }
 		  else{

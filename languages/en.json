@@ -5,9 +5,15 @@
   "NO": "No",
   "CREATION_DATE": "Creation date",
   "ALARM_EXIST": "This object already exist",
+  "ALARM_LENGTH": "It is allowed Only three characters",
   "DISABLED_TITLE": "The Organsation Unit Selected is disabled",
   "CANCEL": "Clear Form",
   "FORM_MSG_EMPTYFIELD": "verify that the form does not have empty fields",
+  "PERIOD_LIST": "Select period",
+  "PERIODTYPE_DAILY":"Daily",
+	"PERIODTYPE_WEEKLY":"Weekly",
+	"PERIODTYPE_MONTHLY":"Monthly",
+  "PERIODTYPE_YEARLY": "Yearly",  
 
   "_____________MODAL": "modal for delete _____",
   "CLOSE_DATE": "Close Date",
@@ -100,10 +106,14 @@
 	"HEALTHSITE_CODE":"Code",
 	"SITE_SAVE": "Save Health Site",
 	"SITE_CANCEL": "Clear form",
-	"SITE_UPDATED": "The health site has been updated",
+  "SITE_UPDATED": "The health site has been updated",
+  "SITE_NOUPDATED": "Health site doesn't saved, review that the field name isn't empty",
   "SITE_USER": "User",
   "SITE_SAVED": "Health site saved",
 	"SITE_NOSAVED": "Health site doesn't saved, review that the field name isn't empty",
+	"HEALTHSITE_WARNING": "Incompatiblities with the following Health Services. Do you want to continue?",
+	"HEALTHSITE_WARNING_YES": "Yes",
+	"HEALTHSITE_WARNING_NO": "No",
 	
 	
 	"______________ Module_":" HEALTH SERVICE_____________",
@@ -135,6 +145,10 @@
 	"ORGUNITDELETE_NAME": "Name",
 	
 	
+  "_______________Module": " Operational Center_________________",
+  "OPERATIONALCENTER_NOSELECTED": "Please select an operational center",
+
+
 	"_______________ Directive ":" OrganisationUnit+tree_____________",
 	"ORGANISATIONUNIT":"Project",
 	"ORGANISATIONUNIT_FIND":"Select a project",

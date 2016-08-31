@@ -17,15 +17,14 @@
    along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. -->
 
 
-<div  ng-controller="d2periodtypeController">
-	  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-	    {{PeriodSelected?PeriodSelected:'PERIOD_LIST' | translate}}
-	    <span class="caret"></span>
-	  </button>
-	  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownCountry">
-		   <li ng-repeat="period in Listperiod">
-			   <a  ng-click='selectperiod(period)'>{{period.name}}</a>
-		   </li>
-	   </ul>
-	</div>
+<div ng-controller="d2periodtypeController">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        {{PeriodSelected?PeriodSelected:'PERIOD_LIST' | translate}}
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownCountry">
+        <li ng-repeat="period in Listperiod">
+            <a ng-click='selectperiod(period)'>{{period.name | translate}}</a>
+        </li>
+    </ul>
 </div>

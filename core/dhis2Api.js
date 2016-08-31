@@ -50,6 +50,9 @@ var ougroupsetId = { ProjectType: "rQjuGZcxNxE"
                     ,HealthServiceType: "akYeq1mMz2N"
                     ,SiteType: "ZxNjaKVXY1D"};
 
+var codeDataSets = {codeDSVacStaff:"DS_VST_3"
+    				,codeDSDemographic:"DS_DEM"};
+
 var levelMSF = {OperationalCenter: "2"
 			 ,Mission: "3"
 			 ,Project: "4"
@@ -72,6 +75,7 @@ Dhis2Api.factory("commonvariable", function () {
 	var Vari={
 			url: urlApi,
 			urlbase: urlBase,
+			codedatasets: codeDataSets,
 			OrganisationUnitList:[],
 			OrganisationUnit:"",
 			RefreshTreeOU:false,
@@ -92,6 +96,7 @@ Dhis2Api.factory("commonvariable", function () {
 		    userDirective:"",
 		    users: usersMSF,
 		    healhservicesCodeOUG: "",
+		    refreshDataSets:false,
 		    clearForm:[]
 			};
 
@@ -142,12 +147,23 @@ Dhis2Api.factory("TreeOrganisationunit",['$resource','commonvariable', function 
 
 Dhis2Api.factory("OrgUnit",['$resource','commonvariable', function ($resource,commonvariable) {
 	return $resource(commonvariable.url+"organisationUnits/:id",
+		{id:'@id',
+		fields:'@fields'},
+		{Get: { method: "GET"},
+		    POST: { method: "POST" },
+		  PUT: { method: "PUT"},
+		  PATCH: {method: "PATCH"}});
+}]);
+
+Dhis2Api.factory("OrgUnitGroup",['$resource','commonvariable', function ($resource,commonvariable) {
+	return $resource(commonvariable.url+"organisationUnitGroups/:id",
 		{id:'@id'},
 		{Get: { method: "GET"},
 		    POST: { method: "POST" },
 		  PUT: { method: "PUT"},
 		  PATCH: {method: "PATCH"}});
 }]);
+
 
 Dhis2Api.factory("User",['$resource','commonvariable', function ($resource,commonvariable) {
 	return $resource(commonvariable.url+"users",
@@ -293,6 +309,7 @@ Dhis2Api.factory("DataSetsOrgUnit",['$resource','commonvariable', function ($res
 		uiddataset: '@uiddataset'
 		},
 		{ POST: { method: "POST"},
+		  GET: {method: "GET"},
 		  DELETE: {method: "DELETE"}});
 }]);
 
@@ -320,5 +337,15 @@ Dhis2Api.factory("meUser", ['$resource', 'commonvariable', function ($resource, 
 		{},
 		{ get: { method: "GET" } });
 
+}]);
+
+Dhis2Api.factory("Section",['$resource','commonvariable', function ($resource,commonvariable) {
+	return $resource(commonvariable.url+"sections/:id",
+		{id:'@id'},
+		{ Get: { method: "GET"},
+	      Delete: {method: "DELETE"},
+		  POST: { method: "POST" },
+		  PUT: { method: "PUT"},
+		  PATCH: {method: "PATCH"}});
 }]);
 

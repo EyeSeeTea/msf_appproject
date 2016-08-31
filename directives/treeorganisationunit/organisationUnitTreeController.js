@@ -35,6 +35,31 @@ Dhis2Api.controller("d2TreeorganisationUnitController", ['$scope','$q', '$locati
     //		  $scope.treeOrganisationUnitList = data.organisationUnits;
     //	 });
     //};
+    $scope.shortByName=function(listToSort){
+            return  listToSort.sort(function(a, b) {
+                var nameA = a.name.toUpperCase();
+                var nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
+     }
+
+     $scope.recursiveShort=function(listToSort){
+         console.log(listToSort);
+        return angular.forEach(listToSort,function(value,key){
+            if(value.children){
+                $scope.recursiveShort(value.children);
+            }
+            else{
+                 return $scope.shortByName(listToSort);
+            }
+        });
+     };
 	 $scope.loadOrganisationUnit = function () {
 	     meUser.get()
             .$promise.then(function (data) {
@@ -47,9 +72,9 @@ Dhis2Api.controller("d2TreeorganisationUnitController", ['$scope','$q', '$locati
                     TreeOrganisationunit.get({ uid: value.id })
                              .$promise.then(function (data) {
                                  $scope.treeOrganisationUnitList.push(data);
-                                 console.log(kvalue + " , " + numOU)
                                  if (kvalue == numOU) {
                                      $scope.loadingTree = false;
+                                       $scope.treeOrganisationUnitList=$scope.recursiveShort($scope.treeOrganisationUnitList);
                                  }
                              });
 
@@ -116,12 +141,14 @@ Dhis2Api.controller("d2TreeorganisationUnitController", ['$scope','$q', '$locati
                            $scope.updateChildren($scope.OrganisationUnit.currentNode.id).then(function (dataChildren) {
                                commonvariable.EditOrganisationUnit.children = dataChildren;
                                $scope.treeOrganisationUnitList = $scope.update($scope.treeOrganisationUnitList, $scope.OrganisationUnit.currentNode.id, commonvariable.EditOrganisationUnit, 2);
+                               $scope.treeOrganisationUnitList = $scope.recursiveShort($scope.treeOrganisationUnitList);
                                commonvariable.EditOrganisationUnit = [];
                            });
                            
                        }
                        else {
                            $scope.treeOrganisationUnitList = $scope.update($scope.treeOrganisationUnitList, $scope.OrganisationUnit.currentNode.id, commonvariable.NewOrganisationUnit, 1);
+                          $scope.treeOrganisationUnitList = $scope.recursiveShort($scope.treeOrganisationUnitList);
                            commonvariable.NewOrganisationUnit = [];
                        }
                     }
@@ -171,7 +198,8 @@ Dhis2Api.controller("d2TreeorganisationUnitController", ['$scope','$q', '$locati
 						        data.children = [];
 						    }
                             ///
-							$scope.treeOrganisationUnitList=$scope.update($scope.treeOrganisationUnitList, $scope.OrganisationUnit.currentNode.id,data.children,0) 									  
+							$scope.treeOrganisationUnitList=$scope.update($scope.treeOrganisationUnitList, $scope.OrganisationUnit.currentNode.id,data.children,0) 	
+                             $scope.treeOrganisationUnitList = $scope.recursiveShort($scope.treeOrganisationUnitList);								  
 						});
                     }
 
@@ -184,6 +212,7 @@ Dhis2Api.controller("d2TreeorganisationUnitController", ['$scope','$q', '$locati
                                 $scope.PreOrganisationUnitId = $scope.OrganisationUnit.currentNode.id;
                                 commonvariable.OrganisationUnitParentConf = {
                                     id: $scope.OrganisationUnit.currentNode.id,
+                                    code: $scope.OrganisationUnit.currentNode.code,
                                     level: $scope.OrganisationUnit.currentNode.level,
                                     name: $scope.OrganisationUnit.currentNode.name,
                                     openingDate: $scope.OrganisationUnit.currentNode.openingDate,

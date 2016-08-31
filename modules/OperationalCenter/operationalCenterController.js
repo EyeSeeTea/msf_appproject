@@ -66,7 +66,7 @@ appConfigProjectMSF.controller('operationalCenterController', ["$scope", '$filte
 	$scope.showForm=function(){
 		if(commonvariable.OrganisationUnit==undefined){
 				$scope.messages.push({type:"info",
-				text:"Please select an operational center"});
+				    text:$translate('OPERATIONALCENTER_NOSELECTED')});
 				$scope.showfields=false;
 		}
 		else{

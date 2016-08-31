@@ -51,7 +51,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<label for="InputName2">{{'HEALTHSERVICE_NAME' | translate}}</label>
-                        <d2-findorganisationunit field="name" value="{{healthservicename}}" operation="show" placeholder="{{'HEALTHSERVICE_NAME' | translate}}"></d2-findorganisationunit>
+						<input type="text" ng-model="name" class="form-control" ng-disabled=true> </input>                        
 					</div>
 					
 					<div class="col-md-6">
@@ -77,7 +77,7 @@
 				
 					<div class="col-md-4">
 						<label for="sel12"> {{'HEALTHSERVICE_CODE' | translate }} </label>
-                        <d2-findorganisationunit field="code" value="{{healthservicecode}}" operation="show" placeholder="{{'HEALTHSERVICE_CODE' | translate}}"></d2-findorganisationunit>
+						<input type="text" ng-model="code" class="form-control" ng-disabled=true> </input>
 					</div>
 				
 				
@@ -88,7 +88,7 @@
 				
 					<div class="col-md-4">
 						<label for="sel12"> {{'HEALTHSERVICE_TYPE' | translate }} </label>
-						<d2-dropdownorgunitgroupset uidgroupSet="{{healthServiceTypeId}}" operation="show"></d2-dropdownorgunitgroupset>
+						<input type="text" ng-model="servicetype" class="form-control" ng-disabled=true> </input>						
 					</div>
 
 				</div>								

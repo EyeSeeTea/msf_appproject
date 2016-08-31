@@ -16,8 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. */
 
-appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"commonvariable","$modal", "healthserviceService",  
-                                                           function($scope, $filter,commonvariable,$modal, healthserviceService) {
+appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"commonvariable","$modal", "healthserviceService", "commonService", "OrgUnit",
+                                                           function($scope, $filter,commonvariable,$modal, healthserviceService, commonService, OrgUnit) {
 	var $translate = $filter('translate');
 
 	
@@ -52,12 +52,15 @@ appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"c
 	$scope.$watch(
 			function($scope) {
 				if(commonvariable.OrganisationUnit!=undefined && commonvariable.OrganisationUnit.id != $scope.prevOu){
-					
+
+				    $scope.operation = 'show';
+				    $scope.messages = [];
+
 					$scope.prevOu = commonvariable.OrganisationUnit.id;
 					
-					$scope.healthservicename=commonvariable.OrganisationUnit.name;
+					$scope.name=commonvariable.OrganisationUnit.name;
 					$scope.healthservicecreated=commonvariable.OrganisationUnit.openingDate;
-					$scope.healthservicecode=commonvariable.OrganisationUnit.code;
+					$scope.code=commonvariable.OrganisationUnit.code;
 					
 			}
 			});
@@ -125,10 +128,29 @@ appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"c
 	    
   	  if (typeof(commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService])!="undefined") {
   		  
-  		  healthserviceService.editHealthService(commonvariable.OrganisationUnit.id, editOu).then(function(updated){
+  		  healthserviceService.editHealthService(commonvariable.OrganisationUnit.id, editOu, $scope).then(function(updated){
   			 if (updated) {
-  			      commonvariable.RefreshTreeOU = true;  				
-  			      $scope.operation = 'show';
+  				 
+  				 OrgUnit.Get({id:commonvariable.OrganisationUnit.id}).$promise.then(function(orgUnit){
+  	  				  commonService.removeAllDataSetsOrgUnit(orgUnit).then(function (data){
+  	  	  			      healthserviceService.initValue($scope);
+  	  	  			      
+  	   	                  if (commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].name == "Vaccination") { //Assocate Vacc datasets
+  	   	                	  
+  	   	                	  commonService.assignVaccinationDataSet(orgUnit).$promise.then(function(data){
+  	   	                		
+  	   	                		  commonvariable.refreshDataSets = true;
+  	   	                		  
+  	   	                	  });
+  	   	                  } else commonvariable.refreshDataSets = true;
+  	   	                   	  	  			      
+  	  				  });
+  					 
+  				 });  				 
+  			      commonvariable.RefreshTreeOU = true;  
+	  			  $scope.operation = 'show';  					  
+  			      
+  			      
   			      
   			      $scope.messages.push({ type: "success", text: $translate('SERVICE_UPDATED') });
   			 } else $scope.messages.push({type:"danger", text:"Health service doesn't saved, review that the field name isn't empty"});

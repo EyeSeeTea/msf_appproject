@@ -52,15 +52,10 @@
         </div>
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<label for="InputName2">{{'MISSION_NAME' | translate}}</label>
                     <d2-findorganisationunit field="name" value="{{missionname}}" operation="{{operation}}" placeholder="{{'MISSION_NAME' | translate}}"></d2-findorganisationunit>
 
-				</div>
-
-				<div class="col-md-6">
-					<label for="InputName3">{{'CREATION_DATE' | translate}}</label>
-					<input datepicker-popup="yyyy-MM-dd" ng-model="missioncreated" type="text" class="form-control" id="MissionName" ng-disabled="operation=='show'">
 				</div>
 			</div>
 			

@@ -16,8 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. */
 
-appConfigProjectMSF.controller('projectController', ["$scope", '$filter', "commonvariable", "$modal", "validatorService", "projectService", 
-                                                     function ($scope, $filter, commonvariable, $modal, validatorService, projectService) {
+appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$filter', "commonvariable", "$modal", "validatorService", "projectService",
+                                                     function ($scope, $timeout, $filter, commonvariable, $modal, validatorService, projectService) {
 	
 	
 	projectService.initValue($scope);
@@ -35,7 +35,20 @@ appConfigProjectMSF.controller('projectController', ["$scope", '$filter', "commo
 	
 	$scope.showfields=false;
 	
-	
+	$scope.validateLength = function () {
+	    $scope.siteprefix = $scope.siteprefix.substring(0, 3);
+	    if ($scope.siteprefix.length != 3) {
+	        $scope.alertlength = true;
+	        $timeout(function () { $scope.alertlength = false }, 1500);
+	        $scope.lengthmax = 'has-error';
+	       
+	    }
+	    else {
+	        $scope.alertlength = false;
+	        $scope.lengthmax = '';
+	    }
+
+	};
 	$scope.sitesave = function () {
 
 	    var codeOrgUnit = undefined;
@@ -51,8 +64,7 @@ appConfigProjectMSF.controller('projectController', ["$scope", '$filter', "commo
 	        code: codeOrgUnit,
 	        openingDate: $filter('date')($scope.siteDate, 'yyyy-MM-dd'),
 	        parent: commonvariable.OrganisationUnitParentConf,
-	        healthsitetype: commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.SiteType],
-	        userforValidate: commonvariable.userDirective
+	        healthsitetype: commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.SiteType]
 	    };
         ///validate if object is ok.
 	    validatorService.emptyValue(newOu).then(function (result) {
@@ -62,7 +74,9 @@ appConfigProjectMSF.controller('projectController', ["$scope", '$filter', "commo
 	            	if (result == true) {
 
 	            		commonvariable.RefreshTreeOU = true;
-	            		projectService.saveSiteUser();
+	            		
+	            		if (commonvariable.userDirective.trim() != "")
+	            			projectService.saveSiteUser();
 
                         //set message variable
                         $scope.messages.push({
@@ -111,7 +125,7 @@ appConfigProjectMSF.controller('projectController', ["$scope", '$filter', "commo
 		//$scope.mdname="";
 		$scope.today();
 		$scope.showfields = false;
-
+		$scope.alertlength = true;
 	    //clear txtbox
 		$scope.siteName = "";
 		$scope.frmSite = false;
@@ -126,11 +140,16 @@ appConfigProjectMSF.controller('projectController', ["$scope", '$filter', "commo
 
 	
 	$scope.$watch(
-			function($scope) {
+			function ($scope) {
+
+                
 				if(commonvariable.OrganisationUnit!=undefined && commonvariable.OrganisationUnit.id != $scope.prevOu){
-					
-			        $scope.prevOu = commonvariable.OrganisationUnit.id;
-			        
+
+				    $scope.operation = 'show';
+				    $scope.messages = [];
+
+				    $scope.prevOu = commonvariable.OrganisationUnit.id;
+
 					$scope.projectname=commonvariable.OrganisationUnit.name;
 					$scope.projectcode=commonvariable.OrganisationUnit.code;
 					$scope.projectcreated = commonvariable.OrganisationUnit.openingDate;

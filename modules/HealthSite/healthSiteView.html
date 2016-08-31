@@ -170,4 +170,22 @@
 </div>
 </div>
 </div>
+
 <d2-modaldialogbox></d2-modaldialogbox>
+
+<script type="text/ng-template" id="ConfirmationEdition.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{'HEALTHSITE_WARNING' | translate}}</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="service in items">
+                    {{ service.name }}
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{'HEALTHSITE_WARNING_YES' | translate}}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{'HEALTHSITE_WARNING_NO' | translate}}</button>
+        </div>
+    </script>

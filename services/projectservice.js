@@ -16,8 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. */
 
-Dhis2Api.service('projectService', ['$q', 'commonvariable', 'User', 'OrgUnitOrgUnitGroups', 'OrgUnit', 'OrgUnitGroupsOrgUnit', 'FilterResource', 'OrgUnitGroupByOrgUnit', 'OrganisationUnitChildren',
-                                    function ($q, commonvariable, User, OrgUnitOrgUnitGroups, OrgUnit, OrgUnitGroupsOrgUnit, FilterResource, OrgUnitGroupByOrgUnit, OrganisationUnitChildren) {
+Dhis2Api.service('projectService', ['$q', 'commonvariable', 'User', 'OrgUnitOrgUnitGroups', 'OrgUnit', 'OrgUnitGroupsOrgUnit', 'FilterResource', 'OrgUnitGroupByOrgUnit', 'OrganisationUnitChildren', 'DataSetsOrgUnit',
+                                    function ($q, commonvariable, User, OrgUnitOrgUnitGroups, OrgUnit, OrgUnitGroupsOrgUnit, FilterResource, OrgUnitGroupByOrgUnit, OrganisationUnitChildren, DataSetsOrgUnit) {
 	
 	
     this.initValue=function($scope) {
@@ -211,7 +211,7 @@ Dhis2Api.service('projectService', ['$q', 'commonvariable', 'User', 'OrgUnitOrgU
 
                   });
 
-                  FilterResource.GET({ resource: 'dataSets', filter: 'code:eq:' + "DS_INFR_3" }).$promise
+                  FilterResource.GET({ resource: 'dataSets', filter: 'code:eq:' + commonvariable.codedatasets.codeDSDemographic }).$promise
                     .then(function (response) {
 
                         if (response.dataSets.length > 0) {

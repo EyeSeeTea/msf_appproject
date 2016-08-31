@@ -87,7 +87,7 @@ Dhis2Api.service('missionService', ['$q', 'commonvariable', 'User', 'OrgUnitGrou
 				      OrgUnitGroupsOrgUnit.POST({ uidgroup: commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.Context].id, uidorgunit: newOu.id });
 				  
 
-				  FilterResource.GET({resource:'dataSets', filter:'code:eq:'+"DS_VST_3"}).$promise
+				  FilterResource.GET({resource:'dataSets', filter:'code:eq:'+commonvariable.codedatasets.codeDSVacStaff}).$promise
 				  		.then(function(response){				  			
 				  			if (response.dataSets.length>0) {				  				
 				  				var dataSet = response.dataSets[0];

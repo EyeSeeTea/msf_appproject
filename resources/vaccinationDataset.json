@@ -156,8 +156,11 @@
 			"dataElements": [{
 				"code": "VAC501"
 			}]
-		},
-		{
+		}]
+	},
+	{
+		"name": "Papilloma virus",
+		"dataElementGroup": [{
 			"name": "Papilloma virus",
 			"dataElements": [{
 				"code": "VAC38"
@@ -168,8 +171,11 @@
 			{
 				"code": "VAC40"
 			}]
-		},
-		{
+		}]
+	},
+	{
+		"name": "IPTi",
+		"dataElementGroup": [{
 			"name": "IPTi",
 			"dataElements": [{
 				"code": "VAC106"
