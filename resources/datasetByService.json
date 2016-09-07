@@ -796,6 +796,15 @@
               "name": "1",
               "periods": [
                 {
+                  "name": "weekly",
+                  "datasets": [
+                    {
+                      "name": "Emergency Room - Weekly (Level 1)",
+                      "code": "DS_ERw_1"
+                    }
+                  ]
+                },
+                {
                   "name": "monthly",
                   "datasets": [
                     {
@@ -805,15 +814,6 @@
                     {
                       "name": "Emergency Room - Monthly (Level 1)",
                       "code": "DS_ERm_1"
-                    }
-                  ]
-                },
-                {
-                  "name": "weekly",
-                  "datasets": [
-                    {
-                      "name": "Emergency Room - Weekly (Level 1)",
-                      "code": "DS_ERw_1"
                     }
                   ]
                 }
@@ -1004,6 +1004,10 @@
                   "name": "weekly",
                   "datasets": [
                     {
+                      "name": "Diagnostic Malaria RDT - Weekly",
+                      "code": "DS_DTMO_1"
+                    },
+                    {
                       "name": "Malaria Outbreak/Surveillance Ext. Consultations 2",
                       "code": "DS_MOEC_2"
                     }
@@ -1035,6 +1039,10 @@
                 {
                   "name": "weekly",
                   "datasets": [
+                    {
+                      "name": "Diagnostic Malaria RDT - Weekly",
+                      "code": "DS_DTMO_1"
+                    },
                     {
                       "name": "Malaria Outbreak/Surveillance Ext. Consultations 3",
                       "code": "DS_MOEC_3"
@@ -1074,6 +1082,10 @@
                   "name": "weekly",
                   "datasets": [
                     {
+                      "name": "Diagnostic Malaria RDT - Weekly",
+                      "code": "DS_DTMO_1"
+                    },
+                    {
                       "name": "Malaria Outbreak/Surveillance Hospital Ward 3",
                       "code": "DS_MOHW_3"
                     }
@@ -1087,6 +1099,10 @@
                 {
                   "name": "weekly",
                   "datasets": [
+                    {
+                      "name": "Diagnostic Malaria RDT - Weekly",
+                      "code": "DS_DTMO_1"
+                    },
                     {
                       "name": "Malaria Outbreak/Surveillance Hospital Ward 2",
                       "code": "DS_MOHW_2"
