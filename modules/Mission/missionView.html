@@ -126,9 +126,21 @@
                     <div class="panel-heading">{{'PROJECT_TITLE' | translate}} </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-3">
                                 <label for="InputName2">{{'PROJECT_NAME' | translate}}</label>
                                 <d2-findorganisationunit field="name" placeholder="{{'PROJECT_NAME' | translate}}" id="projectname" ></d2-findorganisationunit>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="locale">{{'LOCALE' | translate}}</label>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="locale" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{selectedLocale | translate}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="locale">
+                                        <li ng-repeat="locale in locales"><a ng-click="selectLocale(locale)">{{locale | translate}}</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 

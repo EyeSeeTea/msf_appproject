@@ -50,7 +50,6 @@ Dhis2Api.controller("d2TreeorganisationUnitController", ['$scope','$q', '$locati
      }
 
      $scope.recursiveShort=function(listToSort){
-         console.log(listToSort);
         return angular.forEach(listToSort,function(value,key){
             if(value.children){
                 $scope.recursiveShort(value.children);

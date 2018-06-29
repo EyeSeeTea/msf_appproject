@@ -1,122 +1,166 @@
 ﻿{
-	"healthserviceSuffix":{
-		"service":[
-			{
-			"name": "Diagnostic test",
-			"code":	"OUG_HSV_DT",
-			"suffix":	"DT"},
-			{
-			"name": "Emergency Room",
-			"code": "OUG_HSV_ER",
-			"suffix":	"ER"},
-			{
-			"name": "External Consultations",
-			"code": "OUG_HSV_EC",
-			"suffix":	"EC"},
-			{
-			"name": "External Consultations (children)",
-			"code":	"OUG_HSV_ECp",
-			"suffix":	"ECp"},
-			{
-			"name": "Gender Based Violence",
-			"code":	"OUG_HSV_GBV",
-			"suffix":	"GBV"},
-			{
-			"name": "HIV",
-			"code":	"OUG_HSV_HIV",
-			"suffix":	"HIV"},
-			{
-			"name": "Hospitalization Ward",
-			"code":	"OUG_HSV_HW",
-			"suffix":	"HW"},
-			{
-			"name": "Hospitalization Ward (children)",
-			"code":	"OUG_HSV_HWp",
-			"suffix":	"HWp"},
-			{
-			"name": "Mental Health",
-			"code":	"OUG_HSV_MH",
-			"suffix":	"MH"},
-			{
-			"name": "Neonatology",
-			"code":	"OUG_HSV_NEO",
-			"suffix":	"NEO"},
-			{
-			"name": "NUT ATFC",
-			"code":	"OUG_HSV_ATFC",
-			"suffix":	"ATFC"},
-			{
-			"name": "NUT ITFC",
-			"code":	"OUG_HSV_ITFC",
-			"suffix":	"ITFC"},
-			{
-			"name": "NUT TSFC",
-			"code":	"OUG_HSV_TSFC",
-			"suffix":	"TSFC"},
-			{
-			"name": "Observation Room",
-			"code":	"OUG_HSV_OR",
-			"suffix":	"OR"},
-			{
-			"name": "Operating Theatre",
-			"code":	"OUG_HSV_OT",
-			"suffix":	"OT"},
-			{
-			"name": "Outbreak Cholera",
-			"code":	"OUG_HSV_CH",
-			"suffix":	"CH"},
-			{
-			"name": "Outbreak Dengue",
-			"code":	"OUG_HSV_DEN",
-			"suffix":	"DEN"},
-			{
-			"name": "Outbreak Malaria IPD",
-			"code":	"OUG_HSV_MOHW",
-			"suffix":	"MOHW"},
-			{
-			"name": "Outbreak Malaria OPD",
-			"code":	"OUG_HSV_MOEC",
-			"suffix":	"MOEC"},
-			{
-			"name": "Outbreak Measles",
-			"code":	"OUG_HSV_MSL",
-			"suffix":	"MSL"},
-			{
-			"name": "Outbreak Meningitis",
-			"code":	"OUG_HSV_MNG",
-			"suffix":	"MNG"},
-			{
-			"name": "Sexual and Rep. Health IPD",
-			"code":	"OUG_HSV_SRHHW",
-			"suffix":	"SRHHW"},
-			{
-			"name": "Sexual and Rep. Health OPD",
-			"code":	"OUG_HSV_SRHEC",
-			"suffix":	"SRHEC"},
-			{
-			"name": "Surgical Ward",
-			"code":	"OUG_HSV_SW",
-			"suffix":	"SW"},
-			{
-			"name": "Surveillance Epid",
-			"code":	"OUG_HSV_EWS",
-			"suffix":	"EWS"},
-			{
-			"name": "Surveillance Mortality",
-			"code":	"OUG_HSV_MOR",
-			"suffix":	"MOR"},
-			{
-			"name": "Surveillance Nut",
-			"code":	"OUG_HSV_NS",
-			"suffix":	"NS"},
-			{
-			"name": "TB",
-			"code":	"OUG_HSV_TB",
-			"suffix":	"TB"},
-			{
-			"name": "Vaccination",
-			"code":	"OUG_HSV_VAC",
-			"suffix":	"VAC"}
-		]
-	}	
+  "healthserviceSuffix": {
+    "service": [
+      {
+        "name": "Diagnostic test",
+        "code": "OUG_HSV_DT",
+        "suffix": "DT"
+      },
+      {
+        "name": "Early Warning System",
+        "code": "OUG_HSV_EWS",
+        "suffix": "EWS"
+      },
+      {
+        "name": "Emergency Room",
+        "code": "OUG_HSV_ER",
+        "suffix": "ER"
+      },
+      {
+        "name": "Viral Hemorrhagic Fever",
+        "code": "OUG_HSV_EVD",
+        "suffix": "EVD"
+      },
+      {
+        "name": "External Consultations",
+        "code": "OUG_HSV_EC",
+        "suffix": "EC"
+      },
+      {
+        "name": "HIV",
+        "code": "OUG_HSV_HIV",
+        "suffix": "HIV"
+      },
+      {
+        "name": "Hospitalization Ward",
+        "code": "OUG_HSV_HW",
+        "suffix": "HW"
+      },
+      {
+        "name": "Hospitalization Ward Multiservice",
+        "code": "OUG_HSV_MSW",
+        "suffix": "MSW"
+      },
+      {
+        "name": "ICU/PICU",
+        "code": "OUG_HSV_ICU",
+        "suffix": "ICU"
+      },
+      {
+        "name": "Mental Health",
+        "code": "OUG_HSV_MH",
+        "suffix": "MH"
+      },
+      {
+        "name": "Neonatology/NICU",
+        "code": "OUG_HSV_NEO",
+        "suffix": "NEO"
+      },
+      {
+        "name": "NUT ATFC",
+        "code": "OUG_HSV_ATFC",
+        "suffix": "ATFC"
+      },
+      {
+        "name": "NUT ITFC",
+        "code": "OUG_HSV_ITFC",
+        "suffix": "ITFC"
+      },
+      {
+        "name": "NUT TSFC",
+        "code": "OUG_HSV_TSFC",
+        "suffix": "TSFC"
+      },
+      {
+        "name": "Observation Room",
+        "code": "OUG_HSV_OR",
+        "suffix": "OR"
+      },
+      {
+        "name": "Operating Theatre",
+        "code": "OUG_HSV_OT",
+        "suffix": "OT"
+      },
+      {
+        "name": "Outbreak Cholera",
+        "code": "OUG_HSV_CH",
+        "suffix": "CH"
+      },
+      {
+        "name": "Outbreak Dengue",
+        "code": "OUG_HSV_DEN",
+        "suffix": "DEN"
+      },
+      {
+        "name": "Outbreak Malaria IPD",
+        "code": "OUG_HSV_MOHW",
+        "suffix": "MOHW"
+      },
+      {
+        "name": "Outbreak Malaria OPD",
+        "code": "OUG_HSV_MOEC",
+        "suffix": "MOEC"
+      },
+      {
+        "name": "Outbreak Measles",
+        "code": "OUG_HSV_MSL",
+        "suffix": "MSL"
+      },
+      {
+        "name": "Outbreak Meningitis",
+        "code": "OUG_HSV_MNG",
+        "suffix": "MNG"
+      },
+      {
+        "name": "Paediatric External Consultation",
+        "code": "OUG_HSV_ECp",
+        "suffix": "ECp"
+      },
+      {
+        "name": "Paediatric Ward",
+        "code": "OUG_HSV_HWp",
+        "suffix": "HWp"
+      },
+      {
+        "name": "Sexual and Rep. Health IPD",
+        "code": "OUG_HSV_SRHHW",
+        "suffix": "SRHHW"
+      },
+      {
+        "name": "Sexual and Rep. Health OPD",
+        "code": "OUG_HSV_SRHEC",
+        "suffix": "SRHEC"
+      },
+      {
+        "name": "Sexual Violence",
+        "code": "OUG_HSV_SV",
+        "suffix": "SV"
+      },
+      {
+        "name": "Surgical Ward",
+        "code": "OUG_HSV_SW",
+        "suffix": "SW"
+      },
+      {
+        "name": "Surveillance Mortality",
+        "code": "OUG_HSV_MOR",
+        "suffix": "MOR"
+      },
+      {
+        "name": "Surveillance Nut",
+        "code": "OUG_HSV_NS",
+        "suffix": "NS"
+      },
+      {
+        "name": "TB",
+        "code": "OUG_HSV_TB",
+        "suffix": "TB"
+      },
+      {
+        "name": "Vaccination",
+        "code": "OUG_HSV_VAC",
+        "suffix": "VAC"
+      }
+    ]
+  }
 }	

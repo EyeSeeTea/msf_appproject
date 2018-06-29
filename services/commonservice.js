@@ -16,8 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. */
 
-Dhis2Api.service('commonService', ['$q', 'commonvariable', 'OrgUnitGroupByOrgUnit', 'OrgUnitGroupSet', 'OrgUnitOrgUnitGroups', 'OrgUnit', 'DataSetsOrgUnit', 'GetMission', 'FilterResource',
-                                   function ($q, commonvariable, OrgUnitGroupByOrgUnit, OrgUnitGroupSet, OrgUnitOrgUnitGroups, OrgUnit, DataSetsOrgUnit, GetMission, FilterResource) {
+Dhis2Api.service('commonService', ['$q', 'commonvariable', 'OrgUnitGroupByOrgUnit', 'OrgUnitGroupSet', 'OrgUnitOrgUnitGroups', 'OrgUnitGroupByGroupSets', 'OrgUnitGroupsOrgUnit', 'OrgUnit', 'DataSetsOrgUnit', 'GetMission', 'FilterResource',
+                                   function ($q, commonvariable, OrgUnitGroupByOrgUnit, OrgUnitGroupSet, OrgUnitOrgUnitGroups, OrgUnitGroupByGroupSets, OrgUnitGroupsOrgUnit, OrgUnit, DataSetsOrgUnit, GetMission, FilterResource) {
 	
 
 	this.getServiceSuffix = function(healthserviceSuffix) {
@@ -290,8 +290,28 @@ Dhis2Api.service('commonService', ['$q', 'commonvariable', 'OrgUnitGroupByOrgUni
 	        var x = a[key]; var y = b[key];
 	        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	    });
-	}
-
-
+    }
+    
+    this.assignUniqueOrgunitGroupInGroupSet = function (orgunit, orgunitGroupId, orgunitGroupSetId) {
+        var allOrgunitGroupsInSet;
+        
+        return OrgUnitGroupByGroupSets.get({uid: orgunitGroupSetId}).$promise.then( data => {
+            allOrgunitGroupsInSet = data.organisationUnitGroups;
+            var payload = {
+                additions: [{id: orgunit.id}]
+            };
+            return OrgUnitGroupsOrgUnit.POST({uidgroup: orgunitGroupId}, payload).$promise;
+        })
+        .then( success => {
+            var payload = {
+                deletions: [{id: orgunit.id}]
+            };
+            var deletePromises = allOrgunitGroupsInSet
+                .filter( group => group.id != orgunitGroupId )
+                .map( group => OrgUnitGroupsOrgUnit.POST({uidgroup: group.id}, payload).$promise );
+                
+            return $q.all(deletePromises);
+        });
+    }
 
 }]);

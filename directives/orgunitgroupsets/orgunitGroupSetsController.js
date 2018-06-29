@@ -34,11 +34,11 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 	
     $scope.initValue = function () {
         $scope.ougName = "";
-    }
+    };
 
     if ($scope.operation != "show") {
 		
-		$scope.disabled=false;
+		$scope.disabled = false;
 		
 		if ($scope.uidgroupsetfilterby != undefined) {
 			
@@ -53,7 +53,7 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 		
 		else  {
 			OrgUnitGroupSet.get({uid:$scope.uidgroupset}).$promise.then(function(data) {
-				$scope.ListOrgUnitGroups=data.organisationUnitGroups;
+				$scope.ListOrgUnitGroups = data.organisationUnitGroups;
 						
 			});
 		
@@ -62,14 +62,14 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 	
 	
 	$scope.selectOrgUnitGroup = function(ougSelected){ 
-		$scope.ougName=ougSelected.name;
+		$scope.ougName = ougSelected.name;
 		
 		getIDOUG.get({filter:'code:eq:'+ougSelected.code}).$promise.then(function(response) {
-			
-			commonvariable.orgUnitGroupSet[$scope.uidgroupset]=response.organisationUnitGroups[0];
+
+			commonvariable.orgUnitGroupSet[$scope.uidgroupset] = response.organisationUnitGroups[0];
 		
 		});
-	}
+	};
 	
 	
 	function getOrgUnitGroup (uidOrgUnit, uidOrgUnitGroupSet) {
@@ -79,11 +79,11 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 
 		OrgUnitGroupByOrgUnit.get({uid:uidOrgUnit}).$promise.then(function(data) {
 			
-			ouOrgUnitGroups=data.organisationUnitGroups;
+			ouOrgUnitGroups = data.organisationUnitGroups;
 			
 			OrgUnitGroupSet.get({uid:uidOrgUnitGroupSet}).$promise.then(function(data) {
 								
-				ougsOrgUnitGroups=data.organisationUnitGroups;
+				ougsOrgUnitGroups = data.organisationUnitGroups;
 				
 			    try {
 			    	
@@ -102,7 +102,7 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 			            }
 			            
 			        }
-			    } catch (err) { };
+			    } catch (err) { }
 			    
 			});
 			
@@ -135,8 +135,7 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 	    }
 	    ///
 	    if ($scope.operation != $scope.prevOperation) {
-			//console.log("Ejecuto este Watch");
-	       
+
 	        try {
 	            getOrgUnitGroup(commonvariable.OrganisationUnit.id, $scope.uidgroupset).then(function (data) {
 	            	$scope.ougName = data.name;
@@ -148,7 +147,7 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 	            })
 	        } catch (err) {
 	            console.log("Error, Organisation Unit doesn't selected");
-	        };
+	        }
 	        
 	        
 			OrgUnitGroupSet.get({uid:$scope.uidgroupset}).$promise.then(function(data) {
@@ -156,15 +155,8 @@ Dhis2Api.controller("d2DropdownorgunitgroupsetController", ['$q','$scope','$http
 						
 			});
 
-	        
-	        if ($scope.operation == 'edit')
-	                $scope.disabled = false;
-	            else {
-	                $scope.disabled = true;
-	               
-	            }
-	            $scope.prevOperation = $scope.operation;
-
+	        $scope.disabled = $scope.operation != 'edit';
+			$scope.prevOperation = $scope.operation;
 
 	    }
 

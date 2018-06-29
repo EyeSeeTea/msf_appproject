@@ -144,103 +144,96 @@
             <alert ng-repeat="message in messages" type="{{message.type}}" close="closeAlertMessage($index)">{{message.text}}</alert>
         </div>
     </div>
-
-		<div class="row">
+	<div class="row">
 		<div class="col-md-12">
-			<div class="col-md-9">
+			<div class="col-md-3">
+				<h2><button ng-click="toggleManageUsers()" type="button" class="btn btn-primary">{{'MANAGE_USERS' | translate}}</button></h2>
+			</div>
+			<div class="col-md-6">
 			</div>
 			<div class="col-md-3">
-				<h2>	<button ng-click="showForm(1)" type="button" class="btn btn-primary">{{'HEALTHSITE_CREATE' | translate}}</button></h2>
+				<h2><button ng-click="showForm(1)" type="button" class="btn btn-primary">{{'HEALTHSITE_CREATE' | translate}}</button></h2>
 			</div>
 		</div>
-		</div>
+	</div>
 
 <br/>
 
+<div ng-if="manageUsers" class="col-md-12">
+	<d2-user-manager orgunit="project"></d2-user-manager>
+</div>
 
 <div ng-show="frmSite" class="col-md-12">
 
-<div class="panel panel-default">
-  <div class="panel-heading">{{'HEALTHSITE_TITLE' | translate}}</div>
-  <div class="panel-body">
-  	<div class="row">
-		<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">{{'HEALTHSITE_TITLE' | translate}}</div>
+		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-12">
-					<label for="InputName2">{{'HEALTHSITE_NAME' | translate}}</label>
-					<d2-findorganisationunit field="name" placeholder="{{'HEALTHSITE_NAME' | translate}}" id="hsname" ></d2-findorganisationunit>
+					<div class="row">
+						<div class="col-md-12">
+							<label for="InputName2">{{'HEALTHSITE_NAME' | translate}}</label>
+							<d2-findorganisationunit field="name" placeholder="{{'HEALTHSITE_NAME' | translate}}" id="hsname" ></d2-findorganisationunit>
+						</div>
+					</div>
+
+					<br/>
+
+					<div class="row">
+						<div class="col-md-4">
+							<label for="InputName2">{{'HEALTHSITE_OPENING_DATE' | translate}}</label>
+							<p class="input-group">
+								<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="siteDate" is-open="openedsite" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="opensitedate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
+						</div>
+						<div class="col-md-4">
+							<label for="sel12"> {{'HEALTHSITE_TYPE' | translate }} </label>
+							<d2-dropdownorgunitgroupset uidgroupSet="{{siteTypeId}}" id="healthsitetype"></d2-dropdownorgunitgroupset>
+						</div>
+						<div class="col-md-2 ">
+							<div class="row">
+								<label for="sel12">   {{'HEALTHSITE_PREFIX' | translate}}</label>
+							</div>
+							<div class="row">
+								<div class="col-md-7">
+									<input ng-model="siteprefix" type="text" class="form-control" id="SitePrefix" ng-change="validateLength()">
+								</div>
+								<div class="col-md-5">
+									<button type="button" class="btn btn-default btn-warning" aria-label="Advertencia" ng-show="alertlength" ng-click="alertlength = false">
+										<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+										{{ 'ALARM_LENGTH' | translate }}
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label for="InputName2">{{'SITE_USER' | translate}}</label>
+							<d2-finduser placeholder="{{'PROJECT_USER' | translate}}" id="usernameproject"></d2-finduser>
+						</div>
+					</div>
 				</div>
 			</div>
-			
-			<br/>
-			
+			<div class="col-md-12">
+				<div class="row"></div>
+			</div>
+
+			<br>
+
 			<div class="row">
-				<div class="col-md-4">
-					<label for="InputName2">{{'HEALTHSITE_OPENING_DATE' | translate}}</label>
-					<p class="input-group">
-           		    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="siteDate" is-open="openedsite" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              		<span class="input-group-btn">
-                		<button type="button" class="btn btn-default" ng-click="opensitedate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              		</span>
-            		</p>
+				<div class="col-md-6">
+					<button ng-click="sitesave()" type="button" ng-disabled="alertlength" class="btn btn-primary">{{'HEALTHSITE_SAVE' | translate}} </button>
 				</div>
-				
-
-               <div class="col-md-4">
-					<label for="sel12"> {{'HEALTHSITE_TYPE' | translate }} </label>
-					<d2-dropdownorgunitgroupset uidgroupSet="{{siteTypeId}}" id="healthsitetype"></d2-dropdownorgunitgroupset>
+				<div class="col-md-6">
+					<button type="button" class="btn btn-danger" ng-click="hideForm()">{{'HEALTHSITE_CANCEL' | translate}} </button>
 				</div>
-                <div class="col-md-2 ">
-                    <div class="row">
-                        <label for="sel12">   {{'HEALTHSITE_PREFIX' | translate}}</label>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <input ng-model="siteprefix" type="text" class="form-control" id="SitePrefix" ng-change="validateLength()">
-                        </div>
-                        <div class="col-md-5">
-                            <button type="button" class="btn btn-default btn-warning" aria-label="Advertencia" ng-show="alertlength" ng-click="alertlength = false">
-                                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-                                {{ 'ALARM_LENGTH' | translate }}
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-								
 			</div>
-			
-            <div class="row">
-                       		 
-            	<div class="col-md-6">
-                	<label for="InputName2">{{'SITE_USER' | translate}}</label>
-		            	<d2-finduser placeholder="{{'PROJECT_USER' | translate}}" id="usernameproject"></d2-finduser>
-		        </div>                        
-                        
-            </div>
-			
-			
-			
 		</div>
 	</div>
-      <div class="col-md-12">
-          <div class="row">
-          </div>
-      </div>
-
-
-<br>
-<div class="row">
-		<div class="col-md-6">
-			<button ng-click="sitesave()" type="button" ng-disabled="alertlength" class="btn btn-primary">{{'HEALTHSITE_SAVE' | translate}} </button>
-		</div>
-
-		<div class="col-md-6">
-			<button type="button" class="btn btn-danger" ng-click="hideForm()">{{'HEALTHSITE_CANCEL' | translate}} </button>
-		</div>
-</div>
-</div>
-</div>
 </div>
 
 </div>

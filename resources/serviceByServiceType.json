@@ -1,142 +1,158 @@
 {
-	"servicesByServiceType":{
-		"serviceType":[
-			{
-			"name":"External patients",
-			"code":"OUG_HSVT_EXT",
-			"services": [
-				{
-				"name": "Emergency Room",
-				"code": "OUG_HSV_ER"
-				},
-				{
-				"name": "External Consultations",
-				"code": "OUG_HSV_EC"
-				},
-				{
-				"name": "External Consultations (children)",
-				"code": "OUG_HSV_ECp"
-				},
-				{
-				"name": "Gender Based Violence",
-				"code": "OUG_HSV_GBV"
-				},
-				{
-				"name": "HIV",
-				"code": "OUG_HSV_HIV"
-				},
-				{
-				"name": "Mental Health",
-				"code": "OUG_HSV_MH"
-				},
-				{
-				"name": "NUT ATFC",
-				"code": "OUG_HSV_ATFC"
-				},
-				{
-				"name": "NUT TSFC",
-				"code": "OUG_HSV_TSFC"
-				},
-				{
-				"name": "Observation Room",
-				"code": "OUG_HSV_OR"
-				},
-				{
-				"name": "Operating Theatre",
-				"code": "OUG_HSV_OT"
-				},
-				{
-				"name": "Sexual & Rep. Health OPD",
-				"code": "OUG_HSV_SRHOPD"
-				},
-				{
-				"name": "TB",
-				"code": "OUG_HSV_TB"
-				}
-			]},
-			{
-			"name":"Hospitalized patients",
-			"code":"OUG_HSVT_HOS",
-			"services": [
-				{
-				"name": "Hospitalization Ward",
-				"code": "OUG_HSV_IPD"
-				},
-				{
-				"name": "Hospitalization Ward (children)",
-				"code": "OUG_HSV_IPDp"
-				},
-				{
-				"name": "Neonatology",
-				"code": "OUG_HSV_NEO"
-				},
-				{
-				"name": "NUT ITFC",
-				"code": "OUG_HSV_ITFC"
-				},
-				{
-				"name": "Sexual & Rep. Health IPD",
-				"code": "OUG_HSV_SRHIPD"
-				},
-				{
-				"name": "Surgical Ward",
-				"code": "OUG_HSV_SW"
-				}
-			]},
-			{
-			"name":"Surveillance / Outbreak",
-			"code":"OUG_HSVT_SUR",
-			"services": [
-				{
-				"name": "Outbreak Cholera",
-				"code": "OUG_HSV_CHO"
-				},
-				{
-				"name": "Outbreak Dengue",
-				"code": "OUG_HSV_DEN"
-				},
-				{
-				"name": "Outbreak Measles",
-				"code": "OUG_HSV_MSL"
-				},
-				{
-				"name": "Outbreak Meningitis",
-				"code": "OUG_HSV_MNG"
-				},
-				{
-				"name": "Outbreak Malaria IPD",
-				"code": "OUG_HSV_MALIPD"
-				},
-				{
-				"name": "Outbreak Malaria OPD",
-				"code": "OUG_HSV_MALOPD"
-				},
-				{
-				"name": "Surveillance Epid",
-				"code": "OUG_HSV_EWS"
-				},
-				{
-				"name": "Surveillance Mortality",
-				"code": "OUG_HSV_MOR"
-				},
-				{
-				"name": "Surveillance Nutrition",
-				"code": "OUG_HSV_NUT"
-				}
-			]},
-			{
-			"name":"Transversal",
-			"code":"OUG_HSVT_TRA",
-			"services": [
-				{
-				"name": "Diagnostic test",
-				"code": "OUG_HSV_DT"
-				},
-				{
-				"name": "Vaccination",
-				"code": "OUG_HSV_VAC"
-				}
-			]}
-		]
-	}
+  "servicesByServiceType": {
+    "serviceType": [
+      {
+        "name": "External patients",
+        "code": "OUG_HSVT_EXT",
+        "services": [
+          {
+            "name": "Emergency Room",
+            "code": "OUG_HSV_ER"
+          },
+          {
+            "name": "External Consultations",
+            "code": "OUG_HSV_EC"
+          },
+          {
+            "name": "HIV",
+            "code": "OUG_HSV_HIV"
+          },
+          {
+            "name": "Mental Health",
+            "code": "OUG_HSV_MH"
+          },
+          {
+            "name": "NUT ATFC",
+            "code": "OUG_HSV_ATFC"
+          },
+          {
+            "name": "NUT TSFC",
+            "code": "OUG_HSV_TSFC"
+          },
+          {
+            "name": "Observation Room",
+            "code": "OUG_HSV_OR"
+          },
+          {
+            "name": "Operating Theatre",
+            "code": "OUG_HSV_OT"
+          },
+          {
+            "name": "Paediatric External Consultation",
+            "code": "OUG_HSV_ECp"
+          },
+          {
+            "name": "Sexual and Rep. Health OPD",
+            "code": "OUG_HSV_SRHEC"
+          },
+          {
+            "name": "Sexual Violence",
+            "code": "OUG_HSV_SV"
+          },
+          {
+            "name": "TB",
+            "code": "OUG_HSV_TB"
+          }
+        ]
+      },
+      {
+        "name": "Hospitalized patients",
+        "code": "OUG_HSVT_HOS",
+        "services": [
+          {
+            "name": "Hospitalization Ward",
+            "code": "OUG_HSV_HW"
+          },
+          {
+            "name": "Hospitalization Ward Multiservice",
+            "code": "OUG_HSV_MSW"
+          },
+          {
+            "name": "ICU/PICU",
+            "code": "OUG_HSV_ICU"
+          },
+          {
+            "name": "Neonatology/NICU",
+            "code": "OUG_HSV_NEO"
+          },
+          {
+            "name": "NUT ITFC",
+            "code": "OUG_HSV_ITFC"
+          },
+          {
+            "name": "Paediatric Ward",
+            "code": "OUG_HSV_HWp"
+          },
+          {
+            "name": "Sexual and Rep. Health IPD",
+            "code": "OUG_HSV_SRHHW"
+          },
+          {
+            "name": "Surgical Ward",
+            "code": "OUG_HSV_SW"
+          }
+        ]
+      },
+      {
+        "name": "Surveillance / Outbreak",
+        "code": "OUG_HSVT_SUR",
+        "services": [
+          {
+            "name": "Early Warning System",
+            "code": "OUG_HSV_EWS"
+          },
+          {
+            "name": "Outbreak Cholera",
+            "code": "OUG_HSV_CH"
+          },
+          {
+            "name": "Outbreak Dengue",
+            "code": "OUG_HSV_DEN"
+          },
+          {
+            "name": "Outbreak Malaria IPD",
+            "code": "OUG_HSV_MOHW"
+          },
+          {
+            "name": "Outbreak Malaria OPD",
+            "code": "OUG_HSV_MOEC"
+          },
+          {
+            "name": "Outbreak Measles",
+            "code": "OUG_HSV_MSL"
+          },
+          {
+            "name": "Outbreak Meningitis",
+            "code": "OUG_HSV_MNG"
+          },
+          {
+            "name": "Surveillance Mortality",
+            "code": "OUG_HSV_MOR"
+          },
+          {
+            "name": "Surveillance Nut",
+            "code": "OUG_HSV_NS"
+          },
+          {
+            "name": "Viral Hemorrhagic Fever",
+            "code": "OUG_HSV_EVD"
+          }
+        ]
+      },
+      {
+        "name": "Transversal",
+        "code": "OUG_HSVT_TRA",
+        "services": [
+          {
+            "name": "Diagnostic test",
+            "code": "OUG_HSV_DT"
+          },
+          {
+            "name": "Vaccination",
+            "code": "OUG_HSV_VAC"
+          }
+        ]
+      }
+    ]
+  }
 }

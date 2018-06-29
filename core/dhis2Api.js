@@ -48,7 +48,6 @@ dhis2.settings.baseUrl = auxBaseUrl;
 
 
 var urlResource ={"vaccination":{url:"resources/vaccinationDataset.json"},
-				"datasetbyservices":{url:"resources/datasetByService.json"},
 				"healthservice":{url:"resources/healthserviceSuffix.json"},
 				"servicebysite":{url:"resources/servicesBySiteType.json"},
 				"servicebyservicetype":{url:"resources/serviceByServiceType.json"}
@@ -78,12 +77,16 @@ var levelMSF = {OperationalCenter: "2"
 
 var usersMSF = {prefix: "msfe",
 			 postfix_mfp: "mfp",
-			 postfix_fielduser:"user",
-			 postfix_siteuser:"app",
+			 postfix_fielduser: "user",
+			 postfix_siteuser: "app",
+			 postfix_onlineuser: "online",
 			 uid_role_mfp: "gmOkgYI46ny",
 			 uid_role_fielduser: "N4dxeOVu7aN",
+			 uid_role_onlineuser: "mnIBssgDVSC",
 			 passwd: "District123",
 			 uid_project_users_userGroup: "EmlkqPJLcAh"};
+
+var locales = ["en", "es", "fr", "pt"];
 			
 
 var prefixVaccination = { vaccinationName: 'Vaccination_', vaccinationCode: 'DS_VAC_' };
@@ -114,7 +117,8 @@ Dhis2Api.factory("commonvariable", function () {
 		    users: usersMSF,
 		    healhservicesCodeOUG: "",
 		    refreshDataSets:false,
-		    clearForm:[]
+		    clearForm:[],
+			locales: locales
 			};
 
    return Vari; 
@@ -157,7 +161,7 @@ Dhis2Api.factory("TreeOrganisationunit",['$resource','commonvariable', function 
 	return $resource(commonvariable.url+"organisationUnits/:uid", 
    {
 	uid:'@uid',
-	fields: 'name,id,code,level,openingDate,shortName,closedDate,children[name,id,shortName,level,openingDate,closedDate,code,parent,dataSets]'
+	fields: 'name,id,code,level,openingDate,shortName,closedDate,children[name,id,shortName,level,openingDate,closedDate,code,parent,dataSets[id,code,name]]'
    }, 
   { get: { method: "GET"} });
 }]);
@@ -184,15 +188,18 @@ Dhis2Api.factory("OrgUnitGroup",['$resource','commonvariable', function ($resour
 
 Dhis2Api.factory("User",['$resource','commonvariable', function ($resource,commonvariable) {
 	return $resource(commonvariable.url+"users",
-		{},
+		{
+			paging: false
+		},
 		{ POST: { method: "POST"} });
 }]);
 
 Dhis2Api.factory("OrgUnitGroupSet",['$resource','commonvariable', function ($resource,commonvariable) {
 			
 	return $resource(commonvariable.url+"organisationUnitGroupSets/:uid",
-		{	
-		uid:'@uid'
+		{
+		uid:'@uid',
+		fields:'displayName~rename(name),id,code,organisationUnitGroups[id,code,displayName~rename(name)]'
 		},
 		{ get: { method: "GET"} });
 }]);
@@ -212,7 +219,7 @@ Dhis2Api.factory("OrgUnitGroupByOrgUnit",['$resource','commonvariable', function
 	return $resource(commonvariable.url+"organisationUnits/:uid",
 		{	
 		uid:'@uid',
-		fields:'organisationUnitGroups'
+		fields:'organisationUnitGroups[id,code,displayName~rename(name)]'
 		},
 		{ get: { method: "GET"} });
 }]);
@@ -269,13 +276,14 @@ Dhis2Api.factory("DataSets", ['$resource', 'commonvariable', function ($resource
     return $resource(commonvariable.url + "dataSets/:uid",
 		{
 		    uid: '@uid',
-		    fields: ':all'
-		    //fields: 'name,id,code,periodType,dataElements,organisationUnits'
+		    fields: ':all',
+			paging: false
 		},
-		{   Get:{method:"GET"},
-		Post: { method: "POST" },
-		Put: { method: "PUT" },
-		Patch: {method: "PATCH"}
+		{   
+			Get: { method:"GET" }, 
+			Post: { method: "POST" }, 
+			Put: { method: "PUT" }, 
+			Patch: {method: "PATCH"}
 		});
 }]);
 
@@ -295,7 +303,8 @@ Dhis2Api.factory("getIDOUG",  ['$resource', 'commonvariable', function ($resourc
 	
 	return $resource(commonvariable.url + "organisationUnitGroups",
 			{
-			filter:'@filter'
+			filter: '@filter',
+			fields: 'id,displayName,name,code'
 			},
 			{GET: {method: "GET"}});
 		
@@ -394,3 +403,15 @@ Dhis2Api.factory("Section",['$resource','commonvariable', function ($resource,co
 		  PATCH: {method: "PATCH"}});
 }]);
 
+Dhis2Api.factory("SystemId", ['$resource', 'commonvariable', function ($resource, commonvariable) {
+	return $resource(commonvariable.url + "system/id")
+}]);
+
+Dhis2Api.factory("UserSettings", ['$resource', 'commonvariable', function($resource, commonvariable) {
+	return $resource(commonvariable.url + "userSettings/:key?user=:user&value=:value",
+		{
+			key:'@key',
+			user:'@user',
+			value:'@value'
+		});
+}]);

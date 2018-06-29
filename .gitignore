@@ -1,0 +1,5 @@
+deploy.bat
+files-excluded.txt
+.idea/
+*.zip
+.tern-project

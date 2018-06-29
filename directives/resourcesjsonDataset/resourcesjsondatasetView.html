@@ -30,14 +30,14 @@
                     <div class="col-md-6">
                         <table class="table table-condensed">
                             <tbody>
-                                <tr ng-repeat="pdataset in pdatasets" class="{{style[dataset.code]}}">
+                                <tr ng-repeat="pdataset in pdatasets" class="{{style[pdataset.id]}}">
                                     <td>{{pdataset.name}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-primary" ng-click="showedit()"> {{'DATASET_ADD' | translate}}</button>
+                        <button type="button" class="btn btn-primary" ng-click="showEdit()"> {{'DATASET_ADD' | translate}}</button>
                     </div>
                 </div>
 
@@ -47,19 +47,19 @@
                     <alert ng-repeat="message in messages" type="{{message.type}}" close="closeAlertMessage($index)">{{message.text}}</alert>
                 </div>
                 <tabset>
-                    <tab ng-repeat="level in levels" heading="{{'DATASET_LEVEL' | translate}} {{level.name}}" active="tab.active" disable="tab.disabled">
+                    <tab ng-repeat="level in levels" heading="{{'DATASET_LEVEL' | translate}} {{level.value}}" active="tab.active" disable="tab.disabled">
                         <accordion close-others="true">
                             <accordion-group is-open="status.open" ng-repeat="period in level.periods">
                                 <accordion-heading>
-                                    {{'DATASET_PERIOD' | translate}} {{period.name}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    {{'DATASET_PERIOD' | translate}} {{period.value}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
 
                                 <table class="table table-condensed">
                                     <tbody>
-                                        <tr ng-repeat="dataset in period.datasets" class="{{style[dataset.code.trim()]}}">
-                                            <td>{{dataset.name}}</td>
+                                        <tr ng-repeat="dataset in period.dataSets" class="{{style[dataset.id]}}">
+                                            <td>{{dataset.displayName}}</td>
                                             <td>
-                                                <button ng-click="finddatasetSelected(dataset.code)" type="button" class="btn btn-{{style[dataset.code.trim()]}}" aria-label="Left Align">
+                                                <button ng-click="selectDataSet(dataset.id)" type="button" class="btn btn-{{style[dataset.id]}}" aria-label="Left Align">
                                                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 </button>
                                             </td>
@@ -73,6 +73,7 @@
                 <br />
                 <button type="button" class="btn btn-default" ng-click="initForm()"> {{'CANCEL' | translate}}</button>
                 <button type="button" class="btn btn-primary" ng-click="editHealtServiceDataset()"> {{'DATASET_SAVE' | translate}}</button>
+                <button type="button" class="btn btn-default pull-right" ng-click="showAllDatasets()">{{'SHOW_ALL' | translate}}</button>
                 
             </div>
             </div>

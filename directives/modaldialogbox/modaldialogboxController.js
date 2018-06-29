@@ -22,81 +22,64 @@ Dhis2Api.directive('d2Modaldialogbox', function(){
 		restrict: 'E',
 		templateUrl: 'directives/modaldialogbox/modaldialogboxView.html'
 	}
-	}); 
+});
+
 Dhis2Api.controller("d2modaldialogboxController", ['$scope','$modal', function ($scope, $modal) {
     
 }]);
 
-Dhis2Api.controller('ModalConfirmCtrl', function ($scope, $modalInstance,information, OrgUnit, OrganisationUnitChildren, DataSetsOrgUnit, commonvariable) {
+Dhis2Api.controller('ModalConfirmCtrl', function ($scope, $q, $modalInstance, information, OrgUnit, OrganisationUnitChildren, DataSetsOrgUnit, commonvariable) {
 	$scope.information=information;
+
 	$scope.ok = function () {
 
-	    console.log($scope.information.id);
+	    OrganisationUnitChildren.get({uid:$scope.information.id,fields:'name,id,dataSets'}).$promise.then(function(response){
+			var targetOu = response.organisationUnits;
+			var closeTargetOuPromises = targetOu.map(function (orgUnit) {
+				return OrgUnit.PATCH({id: orgUnit.id}, {closedDate: $scope.closedate}).$promise;
+			});
 
-	    //si se desea regresar algun valor por ejemplo si elimino perfectamente retrona true de lo contrario false dnetro de close()
-	    //$modalInstance.close(false);
+			var unassignDatasetsPromises = targetOu.map(function (orgUnit) {
+				var payload = {
+					"deletions": orgUnit.dataSets.map(function (ds) { return { "id": ds.id };})
+				};
+				return DataSetsOrgUnit.POST({"uidorgunit": orgUnit.id}, payload).$promise;
+			});
+			
+			$q.all(closeTargetOuPromises.concat(unassignDatasetsPromises)).then(function(result) {
+				console.log(result);
 
-	    
-	   OrgUnit.PATCH({id:$scope.information.id},{closedDate:$scope.closedate}).$promise.then(function(data){
-	    	  
-	   if (data.response.status=="SUCCESS") {
+				commonvariable.EditOrganisationUnit = commonvariable.OrganisationUnit;
+				commonvariable.EditOrganisationUnit["children"] = [];
+				commonvariable.EditOrganisationUnit["closedDate"] = $scope.closedate;
+				commonvariable.RefreshTreeOU = true;
 
-		    OrganisationUnitChildren.get({uid:$scope.information.id,fields:'name,id,code,level,openingDate,shortName,dataSets'}).$promise.then(function(response){
-	   			   
-		    	
-		        commonvariable.EditOrganisationUnit = commonvariable.OrganisationUnit;
-		        commonvariable.EditOrganisationUnit["children"] = [];
-		    	commonvariable.EditOrganisationUnit["closedDate"] = $scope.closedate;
-		    	commonvariable.RefreshTreeOU = true;
-		    	var children=response.organisationUnits;
-				   
-				   angular.forEach(children, function(valueOU, keyOU){
-				       if ($scope.information.id != valueOU.id) {
-				           OrgUnit.PATCH({ id: valueOU.id }, { closedDate: $scope.closedate });
+				$modalInstance.close(true);
+			})
+		});
+	};
 
-				           var dataSets = valueOU.dataSets;
-
-				           angular.forEach(dataSets, function (valueDS, keyDS) {
-				               DataSetsOrgUnit.DELETE({ uidorgunit: valueOU.id, uiddataset: valueDS.id });
-				           })
-				       }
-
-				   });
-				   
-				   			
-			});	
-		   	       
-		    $modalInstance.close(true);		   		   
-	   }
-	   else $modalInstance.close(false);
-	   
-	   });
-	    
-	    	  
-	    	    	    
-	  };
-
-	  $scope.cancel = function () {
-	    $modalInstance.dismiss('cancel');
-	  };
-
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
 
     // Date datepicker
-	  $scope.today = function () {
-	      datetoday = new Date();
-	      $scope.closedate = datetoday.getFullYear() + "-" + ((datetoday.getMonth() + 1) <= 9 ? "0" + (datetoday.getMonth() + 1) : (datetoday.getMonth() + 1)) + "-" + (datetoday.getDate() <= 9 ? "0" + datetoday.getDate() : datetoday.getDate());
-	  };
+	$scope.today = function () {
+		datetoday = new Date();
+		$scope.closedate = datetoday.getFullYear() + "-" +
+			((datetoday.getMonth() + 1) <= 9 ? "0" + (datetoday.getMonth() + 1) : (datetoday.getMonth() + 1)) + "-" +
+			(datetoday.getDate() <= 9 ? "0" + datetoday.getDate() : datetoday.getDate());
+	};
 
-	  $scope.today();
+	$scope.today();
 
-	  $scope.clear = function () {
-	      $scope.closedate = null;
-	  };
+	$scope.clear = function () {
+		$scope.closedate = null;
+	};
 
-	  $scope.open = function ($event) {
-	      $event.preventDefault();
-	      $event.stopPropagation();
-	      $scope.opened = true;
-	  };
-    /////////////////////////////////////////
-	});
+	$scope.open = function ($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.opened = true;
+	};
+});

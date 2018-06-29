@@ -29,55 +29,44 @@ appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"c
   	};
 	
 	$scope.messages=[];
-	
-	
-	$scope.showfields=false;
-	//console.log(commonvariable.OrganisationUnit);
-	//console.log(commonvariable.OrganisationUnitParentConf) //using as parent  for create OUs
-	
-	
-	$scope.showForm=function(frm){
-		
-		if(frm==1){
-			$scope.frmSite=true;
-		}
-		else{
-			$scope.frmSite=false;
-		}
 
-		
-	//	$scope.showfields=true;
+	$scope.showfields=false;
+
+	$scope.showForm = function(frm){
+		$scope.frmSite = (frm == 1);
 	};
 
 	$scope.$watch(
-			function($scope) {
-				if(commonvariable.OrganisationUnit!=undefined && commonvariable.OrganisationUnit.id != $scope.prevOu){
+		function($scope) {
+			if(commonvariable.OrganisationUnit!=undefined && commonvariable.OrganisationUnit.id != $scope.prevOu){
 
-				    $scope.operation = 'show';
-				    $scope.messages = [];
+				$scope.operation = 'show';
+				$scope.messages = [];
 
-					$scope.prevOu = commonvariable.OrganisationUnit.id;
-					
-					$scope.name=commonvariable.OrganisationUnit.name;
-					$scope.healthservicecreated=commonvariable.OrganisationUnit.openingDate;
-					$scope.code=commonvariable.OrganisationUnit.code;
-					
+				$scope.prevOu = commonvariable.OrganisationUnit.id;
+
+				$scope.name = commonvariable.OrganisationUnit.name;
+				$scope.healthservicecreated = commonvariable.OrganisationUnit.openingDate;
+				$scope.code = commonvariable.OrganisationUnit.code;
 			}
-			});
+		}
+	);
 
 	
 	// Date datepicker
-	  $scope.today = function() {
-	    datetoday = new Date();
+
+	$scope.today = function() {
+		datetoday = new Date();
 	    $scope.healthServiceDate=datetoday.getFullYear()+"-"+((datetoday.getMonth()+1)<=9?"0"+(datetoday.getMonth()+1):(datetoday.getMonth()+1))+"-"+(datetoday.getDate()<=9?"0"+datetoday.getDate():datetoday.getDate());
-	  };
-	  $scope.today();
-	  
-	  $scope.open = function($event) {
-		    $event.preventDefault();
-		    $event.stopPropagation();
-		    $scope.opened = true;
-	  };
+	};
+
+	$scope.today();
+
+	$scope.open = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.opened = true;
+	};
 	
 	
     ////////////////////////For Edit //////////////////////////////////////////
@@ -87,16 +76,16 @@ appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"c
 	    $scope.messages.splice(index, 1);
 	};
 
-	$scope.messages = [];
-    ///enable textBox
 	$scope.operation = 'show';
+
 	$scope.enableforEdit = function () {
 	    $scope.operation = 'edit';
 	    commonvariable.NewOrganisationUnit = [];
-	}
+	};
+
 	$scope.enableforshow = function () {
 	    $scope.operation = 'show';
-	}
+	};
 	
 	
 	$scope.updateEditOrgUnit = function(editOu){
@@ -113,65 +102,39 @@ appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"c
 	
 	      $scope.operation = 'show';		
 		
-	}
+	};
 	
     ////Edit SERVICE
 	$scope.EditService = function () {
 
-	  var editOu = {//payload
-	        openingDate: $filter('date')($scope.healthservicecreated,'yyyy-MM-dd'),
-	        name: commonvariable.OrganisationUnit.name,
-	        shortName: commonvariable.OrganisationUnit.name,
-	        code: commonvariable.OrganisationUnit.code
-	  };
-	    
-	    
-  	  if (typeof(commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService])!="undefined") {
-  		  
-  		  healthserviceService.editHealthService(commonvariable.OrganisationUnit.id, editOu, $scope).then(function(updated){
-  			 if (updated) {
-  				 
-  				 OrgUnit.Get({id:commonvariable.OrganisationUnit.id}).$promise.then(function(orgUnit){
-  	  				  commonService.removeAllDataSetsOrgUnit(orgUnit).then(function (data){
-  	  	  			      healthserviceService.initValue($scope);
-  	  	  			      
-  	   	                  if (commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService].name == "Vaccination") { //Assocate Vacc datasets
-  	   	                	  
-  	   	                	  commonService.assignVaccinationDataSet(orgUnit).$promise.then(function(data){
-  	   	                		
-  	   	                		  commonvariable.refreshDataSets = true;
-  	   	                		  
-  	   	                	  });
-  	   	                  } else commonvariable.refreshDataSets = true;
-  	   	                   	  	  			      
-  	  				  });
-  					 
-  				 });  				 
-  			      commonvariable.RefreshTreeOU = true;  
-	  			  $scope.operation = 'show';  					  
-  			      
-  			      
-  			      
-  			      $scope.messages.push({ type: "success", text: $translate('SERVICE_UPDATED') });
-  			 } else $scope.messages.push({type:"danger", text:"Health service doesn't saved, review that the field name isn't empty"});
-  		  });
-	  
-		  
-  	  }
-  	  
+		var editOu = {//payload
+	        openingDate: $filter('date')($scope.healthservicecreated, 'yyyy-MM-dd'),
+	        name: $scope.name,
+	        shortName: $scope.name.substr(0,50),
+	        code: $scope.code
+		};
 
+		if (typeof(commonvariable.orgUnitGroupSet[commonvariable.ouGroupsetId.HealthService])!="undefined") {
+
+			healthserviceService.editHealthService(commonvariable.OrganisationUnit.id, editOu, $scope).then(function(updated){
+				if (updated) {
+					commonvariable.RefreshTreeOU = true;
+					$scope.operation = 'show';
+
+					$scope.messages.push({ type: "success", text: $translate('SERVICE_UPDATED') });
+				}
+				else {
+					$scope.messages.push({type:"danger", text:"Health service doesn't saved, review that the field name isn't empty"});
+				}
+			});
+		}
 	};
 	
 
     ///Delete PROJECT
 	$scope.DeleteService = function () {
-
-	    ///
-	    $scope.messages.push({ type: "success", text: $translate('SERVICE_DELETED') });
-
-	}
-
-
+		$scope.messages.push({ type: "success", text: $translate('SERVICE_DELETED') });
+	};
 
     /////modal for delete message
 
@@ -199,8 +162,6 @@ appConfigProjectMSF.controller('healthServiceController', ["$scope",'$filter',"c
 	        console.log('Modal dismissed at: ' + new Date());
 	    });
 	};
-
-
 
 }]);
 

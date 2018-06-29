@@ -29,12 +29,12 @@ Dhis2Api.controller("findOrganisationUnitController", ['$scope','$http', 'Organi
 
     $scope.initValue = function () {
         $scope.mdname = "";
-    }
+    };
 
 
     $scope.findOu = function () {
 
-        OrganisationUnitFind.get({ filter: $scope.field + ':eq:' + $scope.mdname })
+        OrganisationUnitFind.get({ param: $scope.field + ':eq:' + $scope.mdname })
             .$promise.then(function (data) {
 
                 if (data.organisationUnits.length > 0) {
@@ -63,18 +63,19 @@ Dhis2Api.controller("findOrganisationUnitController", ['$scope','$http', 'Organi
 
                 } else {
                     $scope.alertOu = false;
-                    if ($scope.field == "name")
+                    if ($scope.field == "name") {
                         commonvariable.ouDirective = $scope.mdname;
-                    else
+                    }
+                    else {
                         commonvariable.ouDirectiveCode = $scope.mdname;
-
+                    }
                     $scope.ouExist = '';
 
                 }
             });
 
 
-    }
+    };
 
     $scope.$watch(function () {
         if (commonvariable.clearForm[$scope.id] == true) {

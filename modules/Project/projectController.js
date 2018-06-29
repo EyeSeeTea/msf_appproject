@@ -30,6 +30,7 @@ appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$fil
 	$scope.messages=[];
 	
 	$scope.prevOu=undefined;
+	$scope.project = commonvariable.OrganisationUnit;													 
 	
 	var $translate = $filter('translate');
 	
@@ -55,7 +56,6 @@ appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$fil
 
 	    if (commonvariable.OrganisationUnit.code != undefined && commonvariable.OrganisationUnit.code.length >= 7)
 	        codeOrgUnit = "OU_" + commonvariable.OrganisationUnit.code.slice(2, 7) + $scope.siteprefix;
-
 
 	    var newOu = {//payload and other validate for Validate
 	        name: commonvariable.ouDirective,
@@ -84,7 +84,7 @@ appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$fil
                         });
 
                         $scope.hideForm();
-                        	            	}
+					}
 	            	else 
                         $scope.messages.push({
                             type: "danger", text: $translate("SITE_NOSAVED")
@@ -101,7 +101,10 @@ appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$fil
 	    });
 	};
 		
-	
+	$scope.toggleManageUsers = function () {
+		$scope.project = commonvariable.OrganisationUnit;
+		$scope.manageUsers = !$scope.manageUsers;
+	};
 	
 	$scope.showForm=function(frm){
 		
@@ -154,7 +157,9 @@ appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$fil
 					$scope.projectcode=commonvariable.OrganisationUnit.code;
 					$scope.projectcreated = commonvariable.OrganisationUnit.openingDate;
 
+					// Hide forms
 					$scope.hideForm();
+					$scope.manageUsers = false;
 			}
 			});
 	
@@ -220,7 +225,6 @@ appConfigProjectMSF.controller('projectController', ["$scope", "$timeout", '$fil
 	      };
 	      
 	      projectService.editProject(commonvariable.OrganisationUnit.id, editOu).then(function (result){
-	    	 
 	    	  if (result == true) {
                   //refresh tree for show change
 	    	      commonvariable.RefreshTreeOU = true;

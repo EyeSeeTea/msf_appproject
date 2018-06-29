@@ -1,0 +1,74 @@
+<!--
+   Copyright (c) 2016.
+
+   This file is part of Project Configuration for MSF.
+
+   Project Configuration is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Project Configuration is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. -->
+
+
+<div  ng-controller="d2UserManagerController">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'USERS_ASSOCIATED_TO' | translate}} {{orgunit.name}}</div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ 'USERS' | translate }}</div>
+                    <ul class="list-group user-list">
+                        <li ng-repeat="user in userList | orderBy:'userCredentials.username'" class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{user.userCredentials.username}}
+                                </div>
+                                <div class="col-md-6">
+                                    <i>{{printUserRoles(user)}}</i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="row">
+                    <form name="createUsersForm" ng-submit="createUsers()">
+                        <h3>{{ 'CREATE_USERS' | translate }}</h3>
+                        <input name="commonUserName" type="text" class="form-control" ng-model="commonUserName" required/>
+                        <br/>
+                        <div class="form_group">
+                            <div class="col-md-4">
+                                <button type="submit" ng-disabled="createUsers.$invalid" class="btn btn-primary">
+                                    {{ 'CREATE_USERS' | translate }}
+                                </button>
+                            </div>
+                            <div class="dropdown col-md-4">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="locale" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    {{selectedLocale | translate}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="locale">
+                                    <li ng-repeat="locale in locales"><a ng-click="selectLocale(locale)">{{locale | translate}}</a></li>
+                                </ul>
+                            </div>
+                            <div class="checkbox col-md-4">
+                                <label>
+                                    <input type="checkbox" ng-model="onlineUsers">{{ 'ONLINE' | translate }}
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

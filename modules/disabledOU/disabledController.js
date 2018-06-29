@@ -16,8 +16,14 @@
    You should have received a copy of the GNU General Public License
    along with Project Configuration.  If not, see <http://www.gnu.org/licenses/>. */
 
-appConfigProjectMSF.controller('disabledController', ["$scope",'$filter',"commonvariable", function($scope, $filter,commonvariable) {
-	var $translate = $filter('translate');
+appConfigProjectMSF.controller('disabledController', ["$scope","commonvariable", "OrgunitService", function($scope, commonvariable, OrgunitService) {
+
+	$scope.enableOrgunit = function () {
+		OrgunitService.openOrgunit(commonvariable.OrganisationUnit.id)
+			.then(function success() {
+				console.log("Orgunit " + commonvariable.OrganisationUnit.id + " successfully opened.");
+			});
+	}
 }]);
 
 
